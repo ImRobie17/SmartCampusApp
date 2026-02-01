@@ -11,9 +11,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContent {
-            // Turn off dynamic color so your UI colors match the Figma look more consistently
+            // Using dynamicColor = false to ensure your custom colors show up
             SmartCampusAppTheme(dynamicColor = false) {
                 AppNav()
             }
