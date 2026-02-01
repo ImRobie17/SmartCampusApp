@@ -2,29 +2,11 @@ package com.example.smartcampusapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +22,6 @@ import androidx.compose.ui.unit.sp
 fun LoginScreen(
     onLoginSuccess: (studentId: String) -> Unit
 ) {
-    // Figma-like colors (tuned to match screenshot)
     val bgPurple = Color(0xFF4E4AB8)
     val cardFill = Color(0xFFB9B7E6)
     val cardBorder = Color(0xFF1ED0FF)
@@ -84,22 +65,10 @@ fun LoginScreen(
 
                 TextField(
                     value = studentId,
-                    onValueChange = {
-                        studentId = it
-                        errorText = null
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Student ID",
-                            color = Color(0xFF063A4A),
-                            fontSize = 13.sp
-                        )
-                    },
+                    onValueChange = { studentId = it; errorText = null },
+                    placeholder = { Text("Student ID", color = Color(0xFF063A4A), fontSize = 13.sp) },
                     singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(
-                        color = fieldText,
-                        fontSize = 13.sp
-                    ),
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = fieldText, fontSize = 13.sp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = fieldFill,
                         unfocusedContainerColor = fieldFill,
@@ -109,10 +78,7 @@ fun LoginScreen(
                         cursorColor = Color.White
                     ),
                     shape = RoundedCornerShape(6.dp),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next
-                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                     modifier = Modifier.width(210.dp)
                 )
 
@@ -120,27 +86,11 @@ fun LoginScreen(
 
                 TextField(
                     value = password,
-                    onValueChange = {
-                        password = it
-                        errorText = null
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Password",
-                            color = Color(0xFF063A4A),
-                            fontSize = 13.sp
-                        )
-                    },
+                    onValueChange = { password = it; errorText = null },
+                    placeholder = { Text("Password", color = Color(0xFF063A4A), fontSize = 13.sp) },
                     singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(
-                        color = fieldText,
-                        fontSize = 13.sp
-                    ),
-                    visualTransformation = if (password.isEmpty()) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = fieldText, fontSize = 13.sp),
+                    visualTransformation = if (password.isEmpty()) VisualTransformation.None else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = fieldFill,
                         unfocusedContainerColor = fieldFill,
@@ -150,49 +100,34 @@ fun LoginScreen(
                         cursorColor = Color.White
                     ),
                     shape = RoundedCornerShape(6.dp),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                     modifier = Modifier.width(210.dp)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (errorText != null) {
-                    Text(
-                        text = errorText!!,
-                        color = Color(0xFF7A0000),
-                        fontSize = 12.sp
-                    )
+                    Text(text = errorText!!, color = Color(0xFF7A0000), fontSize = 12.sp)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
                 OutlinedButton(
                     onClick = {
-                        // Hardcoded validation (Phase 1: mock authentication)
-                        // Change these to your preferred test credentials:
                         val validStudentId = "2300590"
                         val validPassword = "password123"
-
                         if (studentId.trim() == validStudentId && password == validPassword) {
                             onLoginSuccess(studentId.trim())
                         } else {
-                            errorText = "Invalid credentials. Try 2025-0001 / password123"
+                            errorText = "Invalid credentials."
                         }
                     },
                     shape = RoundedCornerShape(50),
                     border = androidx.compose.foundation.BorderStroke(1.dp, buttonBorder),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = buttonFill,
-                        contentColor = Color(0xFF2D2B66)
-                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(containerColor = buttonFill, contentColor = Color(0xFF2D2B66)),
                     modifier = Modifier.width(110.dp)
                 ) {
                     Text(text = "Login", fontSize = 13.sp)
                 }
-
-                Spacer(modifier = Modifier.height(6.dp))
             }
         }
     }

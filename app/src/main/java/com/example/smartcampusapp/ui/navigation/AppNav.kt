@@ -20,8 +20,9 @@ object Routes {
 fun AppNav() {
     val context = LocalContext.current
     val session = SessionManager(context)
-
     val navController = rememberNavController()
+
+    // Determine start screen based on login status
     val startDestination = if (session.isLoggedIn()) Routes.DASHBOARD else Routes.LOGIN
 
     NavHost(
