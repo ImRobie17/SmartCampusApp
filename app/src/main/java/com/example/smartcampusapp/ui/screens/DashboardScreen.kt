@@ -2,15 +2,20 @@ package com.example.smartcampusapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DateRange
 //import androidx.compose.material.icons.filled.GridView // Reliable alternative for 'Dashboard' icon
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.smartcampusapp.ui.theme.Purple80 // Uses Purple80 from your theme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -36,8 +40,7 @@ fun DashboardScreen(
     val bgPurple = Color(0xFF4E4AB8) // Current background purple
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val textcolor = Color(0xFF111111)
-
+    val isDark = isSystemInDarkTheme()
 
     // Forces Right-to-Left for the Drawer position
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -166,16 +169,50 @@ fun DashboardScreen(
                         // Services Section
                         Text("SERVICES", fontSize = 14.sp, color = Color.White.copy(alpha = 0.5f), modifier = Modifier.padding(start = 24.dp))
 
-                        Row(modifier = Modifier.padding(24.dp)) {
-                            DashboardCard(
-                                title = "Campus\nInfo",
-                                icon = Icons.Default.Home,
-                                backgroundColor = Purple80,
-                                iconColor = Color.White,
-                                modifier = Modifier.weight(1f),
-                                onClick = onOpenCampusInfo
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            // FIX: Inayos ang PaddingValues para maging valid (horizontal at vertical)
+                            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 24.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            item {
+                                DashboardCard(
+                                    title = "Campus\nInfo",
+                                    icon = Icons.Default.Home,
+                                    backgroundColor = if (isDark) Color(0xFF2C2C2C) else Color(0xFFB9B7E6),
+                                    iconColor = if (isDark) Color(0xFFD0BCFF) else Color(0xFF2D2B66),
+                                    onClick = onOpenCampusInfo
+                                )
+                            }
+                            item {
+                                DashboardCard(
+                                    title = "CLass\nSchedule",
+                                    icon = Icons.Default.DateRange,
+                                    backgroundColor = if (isDark) Color(0xFF2C2C2C) else Color(0xFFB9B7E6),
+                                    iconColor = if (isDark) Color(0xFFD0BCFF) else Color(0xFF2D2B66),
+                                    onClick = {}
+                                )
+                            }
+                            item {
+                                DashboardCard(
+                                    title = "Campus\nAnnounce",
+                                    icon = Icons.Default.Notifications,
+                                    backgroundColor = if (isDark) Color(0xFF2C2C2C) else Color(0xFFB9B7E6),
+                                    iconColor = if (isDark) Color(0xFFD0BCFF) else Color(0xFF2D2B66),
+                                    onClick = { }
+                                )
+                            }
+                            item {
+                                DashboardCard(
+                                    title = "Logout\nAccount",
+                                    icon = Icons.AutoMirrored.Filled.ExitToApp,
+                                    backgroundColor = if (isDark) Color(0xFF2C2C2C) else Color(0xFFB9B7E6),
+                                    iconColor = if (isDark) Color(0xFFD0BCFF) else Color(0xFF2D2B66),
+                                    onClick = onLogout
+                                )
+                            }
                         }
                     }
                 }
