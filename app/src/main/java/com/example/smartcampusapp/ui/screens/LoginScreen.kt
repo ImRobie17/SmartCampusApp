@@ -78,7 +78,7 @@ fun LoginScreen(
                         cursorColor = Color.White
                     ),
                     shape = RoundedCornerShape(6.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                     modifier = Modifier.width(210.dp)
                 )
 
